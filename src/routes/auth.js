@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { authMiddleware, adminOnly, premiumOnly } from "../middlewares/index.js";
-import { login, register, logout, loginForm, registerForm, getAllUsers, deleteAllUsers, deleteUserById, deleteInactiveUsers, adminView, updateUserRole, renderRestorePassword, restorePassword } from "../controllers/userManager.js";
+import { login, register, logout, loginForm, registerForm, getAllUsers, deleteAllUsers, deleteUserById, deleteInactiveUsers, adminView, updateUserRole, renderRestorePassword, restorePassword, sendTokenToEmail } from "../controllers/userManager.js";
 import passport from "passport";
 import { renderTickets } from "../controllers/stripeManager.js";
 import { getProductsFromPremiumUsers } from "../controllers/productManager.js";
+import SendmailTransport from "nodemailer/lib/sendmail-transport/index.js";
 const authRouter = Router();
 
 authRouter.get("/login", loginForm);
@@ -30,6 +31,8 @@ authRouter.get("/inactive", adminOnly, deleteInactiveUsers);
 authRouter.get("/tickets", authMiddleware, renderTickets);
 
 authRouter.get("/restorePassword", renderRestorePassword);
+
+authRouter.post("/sendTokenToEmail", sendTokenToEmail);
 
 authRouter.put("/restorePassword", restorePassword);
 

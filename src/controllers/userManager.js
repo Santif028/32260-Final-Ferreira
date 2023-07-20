@@ -5,13 +5,16 @@ import {
     serviceDeleteAllUsers,
     serviceDeleteUserById,
     serviceUpdateUserRole,
-    serviceRestorePassword
+    serviceRestorePassword,
+    serviceGetUserByEmail
 } from "../services/auth.js";
 import { serviceProductsFromDTO } from "../services/product.js";
 import { isValidPassword } from "../utils/index.js";
 import transporter from "../utils/mail.js";
 import { userModel } from "../models/users.model.js";
 import { GMAIL } from "../config/index.config.js";
+import { v4 } from "uuid";
+import { serviceCreateToken, serviceDeleteTokenById, serviceFindTokenByUserId } from "../services/token.js";
 
 const loginForm = (req, res) => {
     res.render("login", { title: "Login", style: "index.css" });
@@ -83,10 +86,46 @@ const renderRestorePassword = async (req, res) => {
     res.render("restore-password", { style: "index.css" });
 }
 
-const restorePassword = async (req, res) => {
-    const { email, newPassword } = req.body;
+const sendTokenToEmail = async (req, res) => {
+    const { email } = req.body;
     try {
+        const token = v4();
+        const expirationDate = new Date(Date.now() + 3600000); // Vence en 1 hora
+
+        const newToken = await serviceCreateToken({ token, user: email, expiresAt: expirationDate });
+
+        const mailOptions = {
+            from: GMAIL,
+            to: email,
+            subject: 'Restablecer contraseña',
+            text: `Tu código de restablecimiento de contraseña es: ${token}`,
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                res.send({ status: 'Error sending email:', error});
+            } else {
+                res.send({ status: 'Email sent:', info});
+            }
+        });
+        res.json({ message: 'Se ha enviado un correo electrónico con el código de restablecimiento', payload: newToken });
+    } catch (error) {
+        console.error('Error al enviar el token:', error);
+        return res.status(500).json({ message: 'Error al enviar el token' });
+    }
+};
+
+const restorePassword = async (req, res) => {
+    const { email, code, newPassword } = req.body;
+    try {
+        const tokenReset = await serviceFindTokenByUserId(email);
+        if (tokenReset.token !== code || tokenReset.expiresAt < Date.now()) {
+            return res.status(400).json({ message: 'Código de restablecimiento inválido o vencido' });
+        }
+
         const updatedUser = await serviceRestorePassword(email, newPassword);
+
+        await serviceDeleteTokenById(tokenReset._id);
         res.status(200).send({ status: "success", payload: "User password updated", user: updatedUser });
     } catch (error) {
         res.status(500).send({ status: "error", payload: "Error updating user password" });
@@ -138,9 +177,9 @@ const deleteInactiveUsers = async (req, res) => {
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
-                    res.send({ status: 'Error sending email:' }, error);
+                    res.send({ status: 'Error sending email:', error});
                 } else {
-                    res.send({ status: 'Email sent:' }, info.response);
+                    res.send({ status: 'Email sent:',  info});
                 }
             });
         });
@@ -172,4 +211,4 @@ const logout = (req, res) => {
     });
 };
 
-export { register, login, logout, registerForm, loginForm, getAllUsers, deleteAllUsers, deleteUserById, deleteInactiveUsers, adminView, updateUserRole, restorePassword, renderRestorePassword }
+export { register, login, logout, registerForm, loginForm, getAllUsers, deleteAllUsers, deleteUserById, deleteInactiveUsers, adminView, updateUserRole, restorePassword, renderRestorePassword, sendTokenToEmail }

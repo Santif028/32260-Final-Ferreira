@@ -15,7 +15,7 @@ class TicketsDAOMongoDb extends ContenedorMongoDb {
             const newTicket = await this.save(ticket);
             return newTicket;
         } catch (error) {
-            throw new Error(error)
+            throw new Error(error);
         }
     }
 
