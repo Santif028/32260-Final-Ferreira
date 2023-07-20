@@ -1,0 +1,31 @@
+<div class="containerTickets">
+    <div class="tickets">
+        {{#each getTickets}}
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3 row">
+                    <label for="staticCode" class="col-sm-2 col-form-label">Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="staticCode"
+                            value="{{this.code}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="staticDatetime" class="col-sm-2 col-form-label">Datetime</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="staticDatetime"
+                            value="{{this.purchase_datetime}}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="staticAmount" class="col-sm-2 col-form-label">Amount</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="staticAmount"
+                            value="{{this.amount}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

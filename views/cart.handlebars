@@ -1,0 +1,42 @@
+<div id="containerCart">
+  <h1>Cart</h1>
+  {{#if productsInCart}}
+  <div id="productsInCart" class="container-fluid">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Thumbnail</th>
+          <th scope="col">Title</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each productsInCart}}
+        <tr>
+          <td> <img class="cartProductImg" src="{{this.thumbnail}}" alt="{{this.title}}">
+          </td>
+          <td>
+            <p>{{this.title}}</p>
+          </td>
+          <td id="cartQuantity">
+            <p>{{this.quantity}}</p>
+          </td>
+          <td>
+            <p>$ {{this.price}}</p>
+          </td>
+          <td><button class="btn btn-outline-danger" onclick="deleteProductInCart('{{this._id}}')">Eliminar</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <button class="btn btn-outline-success"
+      onclick="redirectToCheckout('{{user.cartId}}', '{{productCreatedBy}}')">Finalizar
+      Comprar</button>
+  </div>
+  {{/if}}
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/cart.js"></script>

@@ -1,0 +1,65 @@
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <base href="/" />
+  <link rel="stylesheet" href="css/{{style}}" />
+</head>
+
+<body>
+  {{#if user}}
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/api/products">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url}}" id="cartLink">Cart
+              <span class="linkForm" id="cartQuantity"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/api/mockingProducts/">Mocking Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/auth/tickets">Tickets</a>
+          </li>
+          {{#if isPremium}}
+            <li class="nav-item">
+            <a class="btn btn-outline-primary" href="/auth/premiumView">Premium View</a>
+          </li>
+          {{/if}}
+          {{#if isAdmin}}
+          <li class="nav-item">
+            <a class="btn btn-outline-primary" href="/auth/adminView">Admin View</a>
+          </li>
+          {{/if}}
+          <li class="nav-item">
+            <a class="btn btn-outline-info" href="/api/docs">Docs</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger" href="/auth/logout">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {{{body}}}
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script src="/js/routeCart.js"></script>
+  {{else}}
+  {{{body}}}
+  {{/if}}
+</body>
+
+</html>

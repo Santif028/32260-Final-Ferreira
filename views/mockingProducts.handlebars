@@ -1,0 +1,21 @@
+<div class="containerProducts">
+    <h1>All products</h1>
+    {{#if user}}
+    <h1>Welcome {{user.user}}</h1>
+    {{else}}
+    {{/if}}
+    <div class="products">
+        {{#each allProducts}}
+        <div class="card" style="width: 18rem;">
+            <img src={{this.thumbnail}} class="card-img-top" alt="...">
+            <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title">{{this.title}}</h5>
+                <p class="card-text">{{this.category}}</p>
+                <p class="card-text">{{this.description}}</p>
+                <p class="card-text">Last {{this.stock}} units</p>
+                <p class="card-text">Price: ${{this.price}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

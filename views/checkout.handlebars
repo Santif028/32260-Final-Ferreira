@@ -1,0 +1,72 @@
+<div class="containerCheckout">
+    <div class="container-fluid">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            {{#each products}}
+            <tbody>
+                <tr>
+                    <td>
+                        <p>{{this.product.title}}</p>
+                    </td>
+                    <td>
+                        <p>${{this.product.price}}</p>
+                    </td>
+                    <td>
+                        <p>{{this.product.stock}}</p>
+                    </td>
+                    <td>
+                        <p>{{this.quantity}}</p>
+                    </td>
+                </tr>
+                {{/each}}
+                {{#each outOfStockProducts}}
+                <tr>
+                    <td>
+                        <p>{{this.product.title}}</p>
+                    </td>
+                    <td>
+                        <p>{{this.product.price}}</p>
+                    </td>
+                    <td>
+                        <p>{{this.product.stock}}</p>
+                        <p class="lowStock">Stock Insuficiente</p>
+                    </td>
+                    <td>
+                        <p>{{this.quantity}}</p>
+                    </td>
+                </tr>
+                {{/each}}
+                <tr>
+                    <td colspan="3">
+                        <p>Total:</p>
+                    </td>
+                    <td>
+                        <p>${{total}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card">
+            <div class="card-body">
+                <div id="card-element" class="formInput">
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" onclick="purchaseProducts('{{user.cartId}}')">Comprar</button>
+                <button class="btn btn-danger" onclick="goBackToCart('{{user.cartId}}')">Volver al Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/js/purchase.js"></script>

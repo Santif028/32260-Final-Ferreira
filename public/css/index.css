@@ -1,0 +1,137 @@
+h1 {
+  margin: 40px 0;
+  text-decoration: underline 2px black;
+  text-align: center;
+}
+
+#navbarNav .navbar-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+#navbarNav .navbar-nav li {
+  border-radius: 5px;
+}
+
+#navbarNav .navbar-nav li:hover {
+  background-color: rgba(128, 128, 128, 0.408);
+}
+
+.containerDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.containerDetails img {
+  width: 300px;
+  height: auto;
+  max-height: 650px;
+}
+
+.containerProducts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  padding-top: 0;
+  width: 100%;
+}
+
+.containerProducts .products {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerProducts .products img {
+  min-height: 250px;
+  max-height: 250px;
+}
+
+.containerAuth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerAuth h1 {
+  text-align: center;
+}
+
+.containerAuth form {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.075);
+  border-radius: 5px;
+  padding: 30px 20px;
+  max-height: 400px;
+  max-width: fit-content;
+  gap: 10px;
+}
+
+.containerAdmin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  padding-top: 0;
+  width: 100%;
+}
+
+.containerAdmin .usersAdmin {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerAdmin .productsAdmin {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerCart {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerCheckout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerTickets {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.containerTickets .tickets {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
