@@ -109,7 +109,6 @@ export const renderTickets = async (req, res) => {
 
     try {
         const getTickets = await serviceFindTicketByPurchaser(user._id);
-        console.log(getTickets);
         let isAdmin = isUserAdmin(user);
         let isPremium = isUserPremium(user);
         if (getTickets === null) {
@@ -118,7 +117,6 @@ export const renderTickets = async (req, res) => {
             res.status(200).render("tickets", { style: 'index.css', user, isPremium, isAdmin, getTickets })
         }
     } catch (error) {
-        console.error(error);
         res.status(500).send({ message: "Error trying to render the tickets" });
     }
 }

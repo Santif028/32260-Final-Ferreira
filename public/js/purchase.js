@@ -22,7 +22,16 @@ const purchaseProducts = async (cid) => {
                     },
                 }).then((result) => {
                     if (result.error) {
-                        console.log(result.error);
+                        Swal.fire({
+                            html: `<p>${result.error.message}</p> `,
+                            icon: res.status,
+                            showConfirmButton: true,
+                            confirmButtonText: "Continuar",
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
                     } else {
                         if (result.paymentIntent.status === 'succeeded') {
                             confirmPurchase(cartId);
