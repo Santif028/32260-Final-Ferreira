@@ -24,7 +24,7 @@ const purchaseProducts = async (cid) => {
                     if (result.error) {
                         Swal.fire({
                             html: `<p>${result.error.message}</p> `,
-                            icon: res.status,
+                            icon: 'error',
                             showConfirmButton: true,
                             confirmButtonText: "Continuar",
                         }).then(async (result) => {
