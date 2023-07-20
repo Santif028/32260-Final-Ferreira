@@ -46,7 +46,6 @@ const getProductsInCart = async (req, res) => {
         let isPremium = isUserPremium(user);
         res.status(200).render("cart", { productsInCart, productCreatedBy, user, isAdmin, isPremium, title: "Cart", style: "index.css" });
     } catch (error) {
-        console.log(error);
         res.status(500).send({ message: "Error trying to get products in cart" });
     }
 }
@@ -55,8 +54,9 @@ const isUserProductInCart = async (uid, cid) => {
     const productsInCart = await serviceGetProductsInCart(cid);
 
     for (const product of productsInCart) {
-
-        if (product.createdBy.toString() === uid.toString()) {
+        if (!product.createdBy) {
+            return false;
+        } else if ((product.createdBy.toString() === uid.toString())) {
             return true;
         }
     }
