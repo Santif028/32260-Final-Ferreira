@@ -62,7 +62,7 @@ class ProductsDAOMongoDb extends ContenedorMongoDb {
                     code: EErrors.INVALID_TYPES_ERROR
                 });
             } else {
-                const newProduct = await this.save({...product, createdBy: uid});
+                const newProduct = await this.save({ ...product, createdBy: uid });
                 return productDtoFromObject(newProduct)
             }
         } catch (error) {
@@ -81,7 +81,7 @@ class ProductsDAOMongoDb extends ContenedorMongoDb {
 
     async getAllProductsCreatedBy(uid) {
         try {
-            const allProducts = await productModel.find({createdBy : uid});
+            const allProducts = await productModel.find({ createdBy: uid });
             return allProductsFromObject(allProducts);
         } catch (error) {
             throw new Error(error);
@@ -89,9 +89,26 @@ class ProductsDAOMongoDb extends ContenedorMongoDb {
     }
 
 
-    async updateProduct(pid, product) {
+    async updateProduct(pid, updates) {
         try {
-            const updatedProduct = await this.update(pid, product);
+            // Verifica si hay propiedades a actualizar en el objeto updates
+            if (Object.keys(updates).length === 0) {
+                return { status: "error", payload: "No hay propiedades para actualizar" };
+            }
+
+
+            // Actualiza el producto con las propiedades proporcionadas en el objeto updates
+            const updatedProduct = await productModel.findOneAndUpdate(
+                { _id: pid },
+                updates,
+                { new: true }
+            );
+
+            // Verifica si el producto existe y ha sido actualizado
+            if (!updatedProduct) {
+                return { status: "error", payload: "Producto inexistente" };
+            }
+
             return updatedProduct;
         } catch (error) {
             throw new Error(error);

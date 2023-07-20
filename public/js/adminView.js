@@ -88,3 +88,40 @@ const createNewProduct = async () => {
         })
 
 }
+
+const updateProduct = async (pid) => {
+    const data = {};
+
+    const newTitle = document.getElementById(`newTitle-${pid}`).value;
+    const newDescription = document.getElementById(`newDescription-${pid}`).value;
+    const newPrice = document.getElementById(`newPrice-${pid}`).value;
+    const newStock = document.getElementById(`newStock-${pid}`).value;
+    const newCategory = document.getElementById(`newCategory-${pid}`).value;
+
+    if (newTitle || newDescription || newPrice || newStock || newCategory) {
+        data.pid = pid;
+        data.updates = {
+            title: newTitle,
+            description: newDescription,
+            price: parseFloat(newPrice),
+            stock: newStock,
+            category: newCategory
+        }
+    }
+
+    await fetch(`${window.location.protocol}//${window.location.host}/api/products/${pid}`, {
+        method: "put",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then((response) => response.json())
+        .then((res) => {
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error("Error updating product:", error);
+        });
+};

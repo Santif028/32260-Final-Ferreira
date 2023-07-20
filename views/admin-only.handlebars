@@ -76,21 +76,22 @@
                 <form class="form" role="form" autocomplete="off" id="formProductAdmin">
                     <input class="form-control" type="hidden" name="productId" value="{{_id}}">
                     <label for="title">Title:</label>
-                    <input class="form-control" type="text" name="title" value="{{title}}">
+                    <input id="newTitle-{{_id}}" class="form-control" type="text" name="title" value="{{title}}">
                     <label for="description">Description:</label>
-                    <input class="form-control" type="text" name="description" value="{{description}}">
+                    <input id="newDescription-{{_id}}" class="form-control" type="text" name="description"
+                        value="{{description}}">
                     <label for="price">Price:</label>
-                    <input class="form-control" type="number" name="price" value="{{price}}">
+                    <input id="newPrice-{{_id}}" class="form-control" type="number" name="price" value="{{price}}">
                     <label for="stock">Stock:</label>
-                    <input class="form-control" type="number" name="stock" value="{{stock}}">
+                    <input id="newStock-{{_id}}" class="form-control" type="number" name="stock" value="{{stock}}">
                     <label for="category">Category:</label>
-                    <input class="form-control" type="text" name="category" value="{{category}}">
+                    <input id="newCategory-{{_id}}" class="form-control" type="text" name="category"
+                        value="{{category}}">
 
                 </form>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-outline-success" {{!-- onclick="updateProduct('{{_id}}')"
-                    --}}>Update</button>
+                <button type="button" class="btn btn-outline-success" onclick="updateProduct('{{_id}}')">Update</button>
                 <button type="button" class="btn btn-outline-danger"
                     onclick="deleteProductById('{{_id}}')">Eliminar</button>
             </div>

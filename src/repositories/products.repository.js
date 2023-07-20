@@ -21,8 +21,8 @@ class ProductRepository {
         return productDAO.getAllProductsCreatedBy(uid);
     }
 
-    async updateProduct(pid, product) {
-        return productDAO.updateProduct(pid, product);
+    async updateProduct(pid, updates) {
+        return productDAO.updateProduct(pid, updates);
     }
     async deleteProductById(pid) {
         return productDAO.deleteProductById(pid);

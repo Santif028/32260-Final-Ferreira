@@ -26,8 +26,8 @@ const serviceProductsCreatedBy = async (uid) => {
     return allProducts;
 }
 
-const serviceUpdateProduct = async (pid, product) => {
-    let updatedProduct = await productRepository.updateProduct(pid, product);
+const serviceUpdateProduct = async (pid, updates) => {
+    let updatedProduct = await productRepository.updateProduct(pid, updates);
     return updatedProduct;
 }
 

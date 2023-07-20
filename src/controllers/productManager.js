@@ -5,14 +5,12 @@ import {
     serviceGetProductById,
     serviceGetProducts,
     serviceUpdateProduct,
-    serviceProductsFromDTO,
     serviceProductsCreatedBy
 } from "../services/product.js";
 import { serviceDeleteProductInCart } from "../services/cart.js";
 import { userModel } from "../models/users.model.js";
 import transporter from "../utils/mail.js";
 import { GMAIL } from "../config/index.config.js";
-import { productModel } from "../models/products.model.js";
 
 
 const isUserAdmin = (user) => {
@@ -78,14 +76,19 @@ const addProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    const id = req.params.pid
+    const {pid, updates} = req.body;
     try {
-        const updateProduct = await serviceUpdateProduct(id, req.body);
-        res.status(200).send({ message: "Product updated successfully", updateProduct });
+        const result = await serviceUpdateProduct(pid, updates);
+        if (result.status === "error") {
+            res.status(404).send({ message: result.payload });
+        } else {
+            res.status(200).send(result);
+        }
     } catch (error) {
-        res.status(500).send({ message: "Error trying to update product" });
+        console.log(error);
+        res.status(500).send({ message: "Error updating the product" });
     }
-}
+};
 
 const deleteAllProducts = async (req, res) => {
     try {
